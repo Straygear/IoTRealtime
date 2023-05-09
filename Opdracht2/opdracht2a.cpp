@@ -16,8 +16,8 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     Buffer opslag;
-    Sensor s1(1,10,100,&opslag); //te genereren data tssen de 1 en de 9 aantal 10
-    Verwerker vw1(&opslag,100);
+    Sensor s1(1,10,1000,&opslag); //te genereren data tssen de 1 en de 9 aantal 10
+    Verwerker vw1(&opslag,1000);
     cout<<"start" <<endl;
     for(int n=0;n<5;n++) {
       thread t1(&Sensor::genereerdData,&s1);
