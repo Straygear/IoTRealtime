@@ -4,10 +4,10 @@
 #include "Timer.h"
 
 using namespace std;
-
 void doeIets(char c,unsigned int tijd,unsigned int aantal);
 int main() {
  int pid;
+ for(int t = 0; t<3; t++){
  pid = fork();
  if(pid==0){
 
@@ -22,23 +22,8 @@ int main() {
  
   	return 0;
  	}
-	else{
-		pid = fork();
-		if(pid==0){
-			Timer tm1;
-  			tm1.Reset();
-   			doeIets('p',5,8);   //print a wacht 0.5 sec doe het 8 keer
-   			doeIets('a',10,8);
-   			doeIets('b',15,8);
-   			doeIets('c',20,8);
-  			tm1.Stop();
-			cout<<tm1.deTijd()<<"  "<<tm1.deNtijd()<<endl;
+ }
 
-   			return 0;
-		}
-		else{
-			pid = fork();
-			if(pid==0){
 				Timer tm1;
   				tm1.Reset();
    				doeIets('p',5,8);   //print a wacht 0.5 sec doe het 8 keer
@@ -50,21 +35,6 @@ int main() {
 
    				return 0;
 			}
-			else{
-				Timer tm1;
-  				tm1.Reset();
-   				doeIets('p',5,8);   //print a wacht 0.5 sec doe het 8 keer
-   				doeIets('a',10,8);
-   				doeIets('b',15,8);
-   				doeIets('c',20,8);
-  				tm1.Stop();
-  				cout<<tm1.deTijd()<<"  "<<tm1.deNtijd()<<endl;
-
-   				return 0;
-			}
-		}
-	}
-}
 
 
 

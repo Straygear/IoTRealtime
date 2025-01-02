@@ -11,22 +11,35 @@
 
 #include <stdio.h>
 #include <mutex>
+#include <condition_variable>
+#include <atomic>
+//#include <semaphore>
+
 
 using namespace std;
 
-#define GROOTTE 10
+
+#define GROOTTE 2
 class Buffer {
     
 public:
     void zetInBuf(int);
     int haalUitBuf();
+    void notifyAll();
+    int hoeveel() const;
+    void tellerPlusPlus();
+    void tellerMinMin();
+    void checkBuffer(string);
 private:
     int in=0;
     int out=0;
-    int teller=0;
+    atomic<int> teller=0;
     int opslag[GROOTTE];
-    mutex m1;
-    
+    //std::counting_semaphore<1> sem{1},tel{teller};
+    mutex m1, m2;
+    condition_variable cv;
+
+ 
 };
 #endif /* Buffer_hpp */
 
