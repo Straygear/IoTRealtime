@@ -13,7 +13,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <atomic>
-//#include <semaphore>
+#include <semaphore>
 
 
 using namespace std;
@@ -25,7 +25,6 @@ class Buffer {
 public:
     void zetInBuf(int);
     int haalUitBuf();
-    void notifyAll();
     int hoeveel() const;
     void tellerPlusPlus();
     void tellerMinMin();
@@ -35,9 +34,12 @@ private:
     int out=0;
     atomic<int> teller=0;
     int opslag[GROOTTE];
-    //std::counting_semaphore<1> sem{1},tel{teller};
-    mutex m1, m2;
-    condition_variable cv;
+    std::counting_semaphore<GROOTTE> leeg{GROOTTE};
+    std::counting_semaphore<GROOTTE> vol{0};
+    std::counting_semaphore<3> sensor{3};
+    std::counting_semaphore<2> verwerken{2};
+
+    mutex m1;
 
  
 };
