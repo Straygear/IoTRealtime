@@ -22,19 +22,21 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     Buffer opslag;
-    Sensor s1(1,10,100,&opslag);
-    Sensor s2(100,110,100,&opslag);
-    Sensor s3(1000,1010,100,&opslag);
+    Sensor s1(1,10,10,&opslag);
+    Sensor s2(101,110,10,&opslag);
+    Sensor s3(1001,1010,10,&opslag);
      //te genereren data tssen de 1 en de 9 aantal 10
-    Verwerker vw1(&opslag,100);
-    Verwerker vw2(&opslag,100);
+    Verwerker vw1(&opslag,15);
+    Verwerker vw2(&opslag,15);
+
 
     vector<future<void>> futures;
+    srand((unsigned) time(0));
     
     cout<<"start" <<endl;
     srand((unsigned) time(0));
     for(int n=0;n<1;n++) {
-      futures.clear(); // Clear previous futures
+     /*futures.clear(); // Clear previous futures
 
         // Start sensor threads
         futures.push_back(async(launch::async, &Sensor::genereerdData, &s1));
@@ -48,15 +50,28 @@ int main(int argc, const char * argv[]) {
         // Wait for all threads to finish
         for (auto& f : futures) {
             f.get(); 
-        }
+        }*/
+       thread t1(&Sensor::genereerdData,&s1);
+       thread t2(&Sensor::genereerdData,&s2);
+       thread t3(&Sensor::genereerdData,&s3);
 
+       thread t4(&Verwerker::verwerkData,&vw1);
+       thread t5(&Verwerker::verwerkData,&vw2);
+
+        t1.join();
+        t2.join();
+        t3.join();
+        t4.join();
+        t5.join();
       
     }
-    std::cout << "Hello, IoT "<<vw1.hetResultaat()<<endl;
-    vector<int> ts=vw1.deTussenstanden();
+    int results = Verwerker::hetResultaat();
+    std::cout << "Hello, IoT "<< results <<endl;
 
-    for(auto i:ts) {
-        cout<<i <<" tussenstanden ";
+    auto tussenstanden = Verwerker::deTussenstanden();
+
+    for(const auto& i: tussenstanden) {
+        cout<<i <<" ";
     }
     cout<<endl;
 

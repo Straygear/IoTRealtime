@@ -19,7 +19,7 @@
 using namespace std;
 
 
-#define GROOTTE 2
+#define GROOTTE 3
 class Buffer {
     
 public:
@@ -39,6 +39,7 @@ private:
     std::counting_semaphore<3> sensor{3};
     std::counting_semaphore<2> verwerken{2};
 
+    mutex teller_mutex;
     mutex m1;
 
  

@@ -6,7 +6,6 @@
 //  Created by John Vi on 4/26/19.
 //  Copyright © 2019 John Vi. All rights reserved.
 //
-
 #ifndef verwerker_hpp
 #define verwerker_hpp
 
@@ -20,15 +19,14 @@ public:
     Verwerker(Buffer*,int);
     void verwerkData();
     void zetUit();
-    int hetResultaat()const;
+    static int hetResultaat();
     void aantalTeLezenData(int);
-    vector<int> deTussenstanden() const;
+    static vector<int> deTussenstanden();
 private:
-    vector<int> tussenstanden;
+    static vector<int> tussenstanden;
     int hoeveel;
     Buffer *buf;
-    int result;
+    static int result;
     bool status;
 };
 #endif /* verwerker_hpp */
-
